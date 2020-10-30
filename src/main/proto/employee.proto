@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service EmployeeService {
+  rpc employee(EmpRequest) returns (EmpResponse) {}
+}
+
+message EmpRequest {
+  string email = 1;
+}
+
+message EmpResponse {
+
+  string firstName = 1;
+  string lastName = 2;
+  string departmentName = 3;
+  string teamName = 4;
+  string joinDate = 5;
+  string mobile = 6;
+  int64 employeeId = 7;
+}
