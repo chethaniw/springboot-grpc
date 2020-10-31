@@ -38,6 +38,13 @@ dependencies {
     compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
     compileOnly group: "org.jetbrains", name: "annotations", version: "13.0"
 
+    //testing dependencies
+    // JUnit-Test-Framework
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    // Grpc-Test-Support
+    testImplementation("io.grpc:grpc-testing")
+
 }
 
 protobuf {
