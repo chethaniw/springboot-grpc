@@ -18,6 +18,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'net.devh:grpc-server-spring-boot-starter:2.10.1.RELEASE'
+    implementation 'junit:junit:4.12'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -40,10 +41,12 @@ dependencies {
 
     //testing dependencies
     // JUnit-Test-Framework
-//    testImplementation("org.junit.jupiter:junit-jupiter-api")
-//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-//    // Grpc-Test-Support
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    // Grpc-Test-Support
 //    testImplementation("io.grpc:grpc-testing")
+    // https://mvnrepository.com/artifact/io.grpc/grpc-testing
+    testCompile group: 'io.grpc', name: 'grpc-testing', version: '1.33.0'
 
 }
 
