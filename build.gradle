@@ -40,10 +40,10 @@ dependencies {
 
     //testing dependencies
     // JUnit-Test-Framework
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    // Grpc-Test-Support
-    testImplementation("io.grpc:grpc-testing")
+//    testImplementation("org.junit.jupiter:junit-jupiter-api")
+//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+//    // Grpc-Test-Support
+//    testImplementation("io.grpc:grpc-testing")
 
 }
 
