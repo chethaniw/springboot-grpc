@@ -48,6 +48,7 @@ public class MailRecieverService {
                     Address[] froms = msg.getFrom();
                     String email = froms == null ? null
                             : ((InternetAddress) froms[0]).getAddress();
+
                     System.out.println(email);
                     System.out.println(result);
 
@@ -95,9 +96,13 @@ public class MailRecieverService {
 
     public void saveToDB(String result, String email){
 
+        //remove hidden \n, \r before splitting
         result = result.replaceAll("[\n\r]", "");
+        //split the result with space
+        //assumptions:
+        //email format - firstName lastName departmentName teamName employeeID joinData mobile
         String[] splitted = result.split(" ");
-        System.out.println(splitted[0]);
+
         com.example.springbootgrpc.Employee employee = new Employee();
         employee.setFirstName(splitted[0]);
         employee.setLastName(splitted[1]);
@@ -106,6 +111,7 @@ public class MailRecieverService {
         employee.setEmployeeID(Long.parseLong(splitted[4]));
         employee.setJoinDate(splitted[5]);
         employee.setMobile(splitted[6]);
+
         employee.setEmail(email);
         employeeRepository.save(employee);
     }

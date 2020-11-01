@@ -29,7 +29,7 @@ public class ListeningExample {
                                 .simpleContent(true)
                                 .javaMailProperties(p -> p.put("mail.debug", "false")),
                         e -> e.autoStartup(true)
-                                .poller(p -> p.fixedDelay(1000)))
+                                .poller(p -> p.fixedDelay(1000))) // next excution 1000 ms after the previous finished
                 .channel(MessageChannels.queue("pop3Channel"))
                 .get();
         return flow;
