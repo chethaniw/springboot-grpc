@@ -17,7 +17,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 
-
 @Service
 public class MailRecieverService {
 
@@ -31,14 +30,13 @@ public class MailRecieverService {
     public MessageHandler processNewEmail() {
         MessageHandler messageHandler = new MessageHandler() {
 
-
             @Override
             public void handleMessage(org.springframework.messaging.Message<?> message) throws MessagingException {
                 String y=message.toString();
 //                System.out.println("New email:" + y);
 
                Object messagePayload =message.getPayload();
-               Message msg = (Message)messagePayload;
+               MimeMessage msg = (MimeMessage)messagePayload;
 //                System.out.println(msg);
                 try {
                     //get content of the email
@@ -64,7 +62,7 @@ public class MailRecieverService {
         return messageHandler;
     }
 
-    private String getTextFromMimeMessage(Message message) throws javax.mail.MessagingException, IOException {
+    public String getTextFromMimeMessage(MimeMessage message) throws javax.mail.MessagingException, IOException {
         String result = "";
         if (message.isMimeType("text/plain")) {
             result = message.getContent().toString();
@@ -75,7 +73,7 @@ public class MailRecieverService {
         return result;
     }
 
-    private String getTextFromMimeMultipart(Multipart msg) throws MessagingException, IOException, javax.mail.MessagingException {
+    public String getTextFromMimeMultipart(Multipart msg) throws MessagingException, IOException, javax.mail.MessagingException {
         String result = "";
         int count = msg.getCount();
         for (int i = 0; i < count; i++) {
