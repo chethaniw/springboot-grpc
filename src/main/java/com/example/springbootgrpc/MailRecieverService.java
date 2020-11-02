@@ -47,8 +47,8 @@ public class MailRecieverService {
                     String email = froms == null ? null
                             : ((InternetAddress) froms[0]).getAddress();
 
-                    System.out.println(email);
-                    System.out.println(result);
+//                    System.out.println(email);
+//                    System.out.println(result);
 
                     //saving data into database
                     saveToDB(result, email);
@@ -64,9 +64,7 @@ public class MailRecieverService {
 
     public String getTextFromMimeMessage(MimeMessage message) throws javax.mail.MessagingException, IOException {
         String result = "";
-        if (message.isMimeType("text/plain")) {
-            result = message.getContent().toString();
-        } else if (message.isMimeType("multipart/*")) {
+        if (message.isMimeType("multipart/*")) {
             MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
             result = getTextFromMimeMultipart(mimeMultipart);
         }
@@ -78,14 +76,9 @@ public class MailRecieverService {
         int count = msg.getCount();
         for (int i = 0; i < count; i++) {
             BodyPart bodyPart = msg.getBodyPart(i);
-            if (bodyPart.isMimeType("text/plain")) {
-                result = result + "\n" + bodyPart.getContent();
-                break; // without break same text appears twice in my tests
-            } else if (bodyPart.isMimeType("text/html")) {
+            if (bodyPart.isMimeType("text/html")) {
                 String html = (String) bodyPart.getContent();
                 result = result + "\n" + org.jsoup.Jsoup.parse(html).text();
-            } else if (bodyPart.getContent() instanceof MimeMultipart) {
-                result = result + getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent());
             }
         }
         return result;

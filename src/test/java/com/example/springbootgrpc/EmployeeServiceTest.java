@@ -23,9 +23,6 @@ public class EmployeeServiceTest {
     @InjectMocks
     private EmployeeServiceImpl employeeService;
 
-    @InjectMocks
-    private MailRecieverService mailRecieverService;
-
     @Mock
     private EmployeeRepository employeeRepository;
 
@@ -54,22 +51,6 @@ public class EmployeeServiceTest {
         employeeService.employee(request,responseObserver);
 
         Assert.assertTrue(true);
-
-//        if (!responseObserver.awaitCompletion(5, TimeUnit.SECONDS)) {
-//            fail("The call did not terminate in time");
-//        }assertNull(responseObserver.getError());
-//        List<EmpResponse> results = responseObserver.getValues();
-//        assertEquals(1, results.size());
-//        EmpResponse response = results.get(0);
-//        assertEquals(EmpResponse.newBuilder()
-//        .setEmployeeId(156)
-//        .setFirstName("John")
-//        .setLastName("Doe")
-//        .setDepartmentName("Development")
-//        .setTeamName("airoline")
-//        .setMobile("0775645234")
-//        .setJoinDate("2020/10/12")
-//        .build(), response);
 
     }
 
