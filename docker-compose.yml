@@ -13,7 +13,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=testdb
+      - POSTGRES_DB=employee
     restart: unless-stopped
   # APP*****************************************
   springbootapp:
@@ -23,7 +23,7 @@ services:
     expose:
       - 8080
     ports:
-      - 8080:8080
+      - 8080:9090
     restart: unless-stopped
     depends_on:
       - postgres
