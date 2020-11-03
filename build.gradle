@@ -25,11 +25,14 @@ dependencies {
     }
 
     //email dependencies
-    compile "org.springframework.integration:spring-integration-mail:5.3.2.RELEASE"
+    compile group: 'org.springframework.integration', name: 'spring-integration-mail', version: '5.0.5.RELEASE'
+
     //compile("org.subethamail:subethasmtp:3.1.7")
     //compile group: 'com.sun.mail', name: 'javax.mail', version: '1.5.5'
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+
+
 
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
@@ -47,6 +50,9 @@ dependencies {
 //    testImplementation("io.grpc:grpc-testing")
     // https://mvnrepository.com/artifact/io.grpc/grpc-testing
     testCompile group: 'io.grpc', name: 'grpc-testing', version: '1.33.0'
+
+
+
 
 }
 

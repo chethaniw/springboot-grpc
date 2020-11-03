@@ -21,6 +21,17 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(long employeeID, String firstName, String lastName, String email, String departmentName, String teamName, String joinDate, String mobile) {
+        this.employeeID = employeeID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.departmentName = departmentName;
+        this.teamName = teamName;
+        this.joinDate = joinDate;
+        this.mobile = mobile;
+    }
+
     public long getEmployeeID() {
         return employeeID;
     }
