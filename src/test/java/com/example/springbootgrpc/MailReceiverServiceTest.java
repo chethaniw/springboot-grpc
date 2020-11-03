@@ -53,8 +53,8 @@ public class MailReceiverServiceTest {
         message.setContent(multipart);
 
         MailRecieverService mockmailservice = spy(mailRecieverService);
-        Mockito.doReturn("firstName lastName departmentName teamName 124 joinData 0773478345").when(mockmailservice).getTextFromMimeMessage(message);
-        doNothing().when(mockmailservice).saveToDB("firstName lastName departmentName teamName 123 joinData 0773478345","sdf@ghn");
+        Mockito.doReturn("keith Neilson development airomart 124 2020/5/3 0773478345").when(mockmailservice).getTextFromMimeMessage(message);
+        doNothing().when(mockmailservice).saveToDB("keith Neilson development airomart 124 2020/5/3 0773478345","sdf@ghn");
 
         org.springframework.messaging.Message<MimeMessage> msg = new GenericMessage<>(message);
 
