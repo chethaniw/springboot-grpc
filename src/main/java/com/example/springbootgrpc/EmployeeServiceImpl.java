@@ -15,7 +15,6 @@ public class EmployeeServiceImpl extends EmployeeServiceGrpc.EmployeeServiceImpl
 
     @Override
     public void employee(Employee.EmpRequest request, StreamObserver<Employee.EmpResponse> responseObserver) {
-//        super.employee(request, responseObserver);
 
         com.example.springbootgrpc.Employee employee = employeeRepository.findByEmail(request.getEmail());
         Employee.EmpResponse empResponse = Employee.EmpResponse.newBuilder()

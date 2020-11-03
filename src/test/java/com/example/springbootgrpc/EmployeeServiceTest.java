@@ -1,8 +1,6 @@
 package com.example.springbootgrpc;
-
 import com.example.springbootgrpc.proto.Employee;
 import com.example.springbootgrpc.proto.Employee.EmpResponse;
-import com.sun.mail.imap.IMAPMessage;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.mail.Message;
-
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
