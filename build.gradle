@@ -33,7 +33,6 @@ dependencies {
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
 
 
-
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
@@ -50,9 +49,6 @@ dependencies {
 //    testImplementation("io.grpc:grpc-testing")
     // https://mvnrepository.com/artifact/io.grpc/grpc-testing
     testCompile group: 'io.grpc', name: 'grpc-testing', version: '1.33.0'
-
-
-
 
 }
 
