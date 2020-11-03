@@ -20,23 +20,20 @@ import java.io.IOException;
 @Service
 public class MailRecieverService {
 
-//    private List<EmailAction> services;
-
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Bean
-    @ServiceActivator(inputChannel = "pop3Channel")
+    @ServiceActivator(inputChannel = "pop3Channel") //indicating capable of handling msg / msg payload
     public MessageHandler processNewEmail() {
         MessageHandler messageHandler = new MessageHandler() {
 
-            @Override
             public void handleMessage(org.springframework.messaging.Message<?> message) throws MessagingException {
-                String y=message.toString();
+//                String y=message.toString();
 //                System.out.println("New email:" + y);
 
-               Object messagePayload =message.getPayload();
-               MimeMessage msg = (MimeMessage)messagePayload;
+                Object messagePayload =message.getPayload();
+                MimeMessage msg = (MimeMessage)messagePayload;
 //                System.out.println(msg);
                 try {
                     //get content of the email
@@ -47,8 +44,8 @@ public class MailRecieverService {
                     String email = froms == null ? null
                             : ((InternetAddress) froms[0]).getAddress();
 
-//                    System.out.println(email);
-//                    System.out.println(result);
+                    System.out.println(email);
+                    System.out.println(result);
 
                     //saving data into database
                     saveToDB(result, email);
@@ -65,8 +62,8 @@ public class MailRecieverService {
     public String getTextFromMimeMessage(MimeMessage message) throws javax.mail.MessagingException, IOException {
         String result = "";
         if (message.isMimeType("multipart/*")) {
-            MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
-            result = getTextFromMimeMultipart(mimeMultipart);
+            Multipart multipart = (Multipart) message.getContent();
+            result = getTextFromMimeMultipart(multipart);
         }
         return result;
     }
@@ -82,7 +79,6 @@ public class MailRecieverService {
             }
         }
         return result;
-
     }
 
     public void saveToDB(String result, String email){
