@@ -45,6 +45,8 @@ public class MailReceiverServiceTest {
         Session session = Session.getDefaultInstance(mailProps, null);
         MimeMessage message = new MimeMessage(session);
         Multipart multipart = new MimeMultipart();
+        BodyPart bdypart = new MimeBodyPart();
+        multipart.addBodyPart(bdypart);
         message.setContent(multipart);
 
         MailRecieverService mockmailservice = spy(mailRecieverService);
@@ -66,11 +68,14 @@ public class MailReceiverServiceTest {
         Session session = Session.getDefaultInstance(mailProps, null);
         MimeMessage message = new MimeMessage(session);
         Multipart multipart = new MimeMultipart();
+        BodyPart bdypart = new MimeBodyPart();
+        multipart.addBodyPart(bdypart);
         message.setContent(multipart);
         MailRecieverService mockmailservice = spy(mailRecieverService);
         Mockito.doReturn("firstName lastName departmentName teamName 124 joinData 0773478345").when(mockmailservice).getTextFromMimeMultipart(multipart);
-        mockmailservice.getTextFromMimeMultipart(multipart);
-        Assert.assertTrue(true);
+        mockmailservice.getTextFromMimeMessage(message);
+//        Assert.assertTrue(true);
+        Assert.assertEquals("firstName lastName departmentName teamName 124 joinData 0773478345", mockmailservice.getTextFromMimeMessage(message));
 
     }
 
@@ -84,6 +89,7 @@ public class MailReceiverServiceTest {
         Multipart multipart = new MimeMultipart();
         BodyPart bdypart = new MimeBodyPart();
         multipart.addBodyPart(bdypart);
+//        bdypart.setText(anyString());
         String result = mailRecieverService.getTextFromMimeMultipart(multipart);
         Assert.assertTrue(true);
     }
@@ -100,29 +106,12 @@ public class MailReceiverServiceTest {
         employee.setMobile("0775645234");
         employee.setJoinDate("2020/10/12");
         employee.setEmail("johndoe@abz");
+
+        when(employeeRepository.findById(anyLong())).thenReturn(java.util.Optional.of(employee));
         when(employeeRepository.save(any())).thenReturn(employee);
         mailRecieverService.saveToDB("John Doe Development airoline 156 2020/10/12 0775645234","johndoe@abz");
         Assert.assertTrue(true);
 
-    }
-
-
-
-    @Test
-    public void testProcessEmail(){
-
-        Properties mailProps = new Properties();
-        mailProps.setProperty("mail.smtp.host", "localhost");
-        mailProps.setProperty("mail.smtp.port","25");
-        Session session = Session.getDefaultInstance(mailProps, null);
-        MimeMessage message = new MimeMessage(session);
-
-        MailRecieverService mockmailservice = spy(mailRecieverService);
-
-//        MessageHandler msg = new MessageHandler(){
-//
-//
-//        };
     }
 
 }
