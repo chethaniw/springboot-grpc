@@ -82,17 +82,23 @@ public class MailRecieverService {
         //email format - firstName lastName departmentName teamName employeeID joinData mobile
         String[] splitted = result.split(" ");
 
-        com.example.springbootgrpc.Employee employee = new Employee();
-        employee.setFirstName(splitted[0]);
-        employee.setLastName(splitted[1]);
-        employee.setDepartmentName(splitted[2]);
-        employee.setTeamName(splitted[3]);
-        employee.setEmployeeID(Long.parseLong(splitted[4]));
-        employee.setJoinDate(splitted[5]);
-        employee.setMobile(splitted[6]);
+        if(employeeRepository.findById(Long.valueOf(splitted[4]))==null) {
+            com.example.springbootgrpc.Employee employee = new Employee();
+            employee.setFirstName(splitted[0]);
+            employee.setLastName(splitted[1]);
+            employee.setDepartmentName(splitted[2]);
+            employee.setTeamName(splitted[3]);
+            employee.setEmployeeID(Long.parseLong(splitted[4]));
+            employee.setJoinDate(splitted[5]);
+            employee.setMobile(splitted[6]);
 
-        employee.setEmail(email);
-        employeeRepository.save(employee);
+            employee.setEmail(email);
+            employeeRepository.save(employee);
+            System.out.println("Employee record saved successfully");
+        }else{
+            System.out.println("Employee already exist");
+        }
+
     }
 
 

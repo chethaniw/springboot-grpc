@@ -84,7 +84,6 @@ public class MailReceiverServiceTest {
         Multipart multipart = new MimeMultipart();
         BodyPart bdypart = new MimeBodyPart();
         multipart.addBodyPart(bdypart);
-
         String result = mailRecieverService.getTextFromMimeMultipart(multipart);
         Assert.assertTrue(true);
     }
@@ -101,12 +100,13 @@ public class MailReceiverServiceTest {
         employee.setMobile("0775645234");
         employee.setJoinDate("2020/10/12");
         employee.setEmail("johndoe@abz");
-
         when(employeeRepository.save(any())).thenReturn(employee);
         mailRecieverService.saveToDB("John Doe Development airoline 156 2020/10/12 0775645234","johndoe@abz");
         Assert.assertTrue(true);
 
     }
+
+
 
     @Test
     public void testProcessEmail(){
