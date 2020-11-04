@@ -32,8 +32,6 @@ dependencies {
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
 
-
-
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
