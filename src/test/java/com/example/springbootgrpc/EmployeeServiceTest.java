@@ -45,11 +45,10 @@ public class EmployeeServiceTest {
         employee.setTeamName("airoline");
         employee.setMobile("0775645234");
         employee.setJoinDate("2020/10/12");
-        when(employeeRepository.findByEmail("johndoe@gmail.com")).thenReturn(employee);
 
+        when(employeeRepository.findByEmail("johndoe@gmail.com")).thenReturn(employee);
         StreamRecorder<EmpResponse> responseObserver = StreamRecorder.create();
         employeeService.employee(request,responseObserver);
-
         Assert.assertTrue(true);
 
     }

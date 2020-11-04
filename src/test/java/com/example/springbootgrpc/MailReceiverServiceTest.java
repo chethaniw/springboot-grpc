@@ -10,25 +10,20 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.integration.mail.AbstractMailReceiver;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.support.GenericMessage;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.MalformedInputException;
 import java.util.Properties;
-
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -70,10 +65,11 @@ public class MailReceiverServiceTest {
         mailProps.setProperty("mail.smtp.port","25");
         Session session = Session.getDefaultInstance(mailProps, null);
         MimeMessage message = new MimeMessage(session);
-
+        Multipart multipart = new MimeMultipart();
+        message.setContent(multipart);
         MailRecieverService mockmailservice = spy(mailRecieverService);
-        Mockito.doReturn("firstName lastName departmentName teamName 124 joinData 0773478345").when(mockmailservice).getTextFromMimeMessage(message);
-        mockmailservice.getTextFromMimeMessage(message);
+        Mockito.doReturn("firstName lastName departmentName teamName 124 joinData 0773478345").when(mockmailservice).getTextFromMimeMultipart(multipart);
+        mockmailservice.getTextFromMimeMultipart(multipart);
         Assert.assertTrue(true);
 
     }
@@ -86,7 +82,8 @@ public class MailReceiverServiceTest {
         Session session = Session.getDefaultInstance(mailProps, null);
         MimeMessage message = new MimeMessage(session);
         Multipart multipart = new MimeMultipart();
-        message.setContent(multipart);
+        BodyPart bdypart = new MimeBodyPart();
+        multipart.addBodyPart(bdypart);
 
         String result = mailRecieverService.getTextFromMimeMultipart(multipart);
         Assert.assertTrue(true);
@@ -105,11 +102,27 @@ public class MailReceiverServiceTest {
         employee.setJoinDate("2020/10/12");
         employee.setEmail("johndoe@abz");
 
-//        Mockito.doNothing().when(employeeRepository);
-//        employeeRepository.save(employee);
         when(employeeRepository.save(any())).thenReturn(employee);
         mailRecieverService.saveToDB("John Doe Development airoline 156 2020/10/12 0775645234","johndoe@abz");
         Assert.assertTrue(true);
 
     }
+
+    @Test
+    public void testProcessEmail(){
+
+        Properties mailProps = new Properties();
+        mailProps.setProperty("mail.smtp.host", "localhost");
+        mailProps.setProperty("mail.smtp.port","25");
+        Session session = Session.getDefaultInstance(mailProps, null);
+        MimeMessage message = new MimeMessage(session);
+
+        MailRecieverService mockmailservice = spy(mailRecieverService);
+
+//        MessageHandler msg = new MessageHandler(){
+//
+//
+//        };
+    }
+
 }
