@@ -11,6 +11,7 @@ import javax.mail.Multipart;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class MailRecieverService {
@@ -53,10 +54,9 @@ public class MailRecieverService {
 
     public String getTextFromMimeMessage(MimeMessage message) throws javax.mail.MessagingException, IOException {
         String result = "";
-        if (message.isMimeType("multipart/*")) {
             Multipart multipart = (Multipart) message.getContent();
             result = getTextFromMimeMultipart(multipart);
-        }
+            System.out.println(result);
         return result;
     }
 
@@ -82,7 +82,11 @@ public class MailRecieverService {
         //email format - firstName lastName departmentName teamName employeeID joinData mobile
         String[] splitted = result.split(" ");
 
-        if(employeeRepository.findById(Long.valueOf(splitted[4]))==null) {
+        Optional<Employee> emp = employeeRepository.findById(Long.valueOf(splitted[4]));
+
+        if(emp != null) {
+            System.out.println("Employee already exist");
+        }else{
             com.example.springbootgrpc.Employee employee = new Employee();
             employee.setFirstName(splitted[0]);
             employee.setLastName(splitted[1]);
@@ -91,12 +95,9 @@ public class MailRecieverService {
             employee.setEmployeeID(Long.parseLong(splitted[4]));
             employee.setJoinDate(splitted[5]);
             employee.setMobile(splitted[6]);
-
             employee.setEmail(email);
             employeeRepository.save(employee);
             System.out.println("Employee record saved successfully");
-        }else{
-            System.out.println("Employee already exist");
         }
 
     }
