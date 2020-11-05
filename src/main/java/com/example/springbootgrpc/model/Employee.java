@@ -1,4 +1,4 @@
-package com.example.springbootgrpc;
+package com.example.springbootgrpc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
