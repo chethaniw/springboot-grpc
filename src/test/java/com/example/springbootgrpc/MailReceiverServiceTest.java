@@ -1,20 +1,13 @@
 package com.example.springbootgrpc;
-
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -74,28 +67,28 @@ public class MailReceiverServiceTest {
         MailRecieverService mockmailservice = spy(mailRecieverService);
         Mockito.doReturn("firstName lastName departmentName teamName 124 joinData 0773478345").when(mockmailservice).getTextFromMimeMultipart(multipart);
         mockmailservice.getTextFromMimeMessage(message);
-//        Assert.assertTrue(true);
         Assert.assertEquals("firstName lastName departmentName teamName 124 joinData 0773478345", mockmailservice.getTextFromMimeMessage(message));
 
     }
 
     @Test
     public void testGetTextFromMimeMultipart() throws MessagingException, IOException {
-        Properties mailProps = new Properties();
-        mailProps.setProperty("mail.smtp.host", "localhost");
-        mailProps.setProperty("mail.smtp.port","25");
-        Session session = Session.getDefaultInstance(mailProps, null);
-        MimeMessage message = new MimeMessage(session);
-        Multipart multipart = new MimeMultipart();
-        BodyPart bdypart = new MimeBodyPart();
-        multipart.addBodyPart(bdypart);
-//        bdypart.setText(anyString());
+        String text = "Hello, World";
+        String html = "<h1>" + text + "</h1>";
+        Multipart multipart = new MimeMultipart( "alternative" );
+        MimeBodyPart textPart = new MimeBodyPart();
+        textPart.setText( text, "utf-8" );
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        htmlPart.setContent( html, "text/html; charset=utf-8" );
+        multipart.addBodyPart( textPart );
+        multipart.addBodyPart( htmlPart );
+        htmlPart.setHeader("Content-Type", "text/html");
         String result = mailRecieverService.getTextFromMimeMultipart(multipart);
         Assert.assertTrue(true);
     }
 
     @Test
-    public void testSaveToDB(){
+    public void testSaveToDBIfCondition(){
 
         Employee employee = new Employee();
         employee.setEmployeeID(156);
@@ -108,6 +101,26 @@ public class MailReceiverServiceTest {
         employee.setEmail("johndoe@abz");
 
         when(employeeRepository.findById(anyLong())).thenReturn(java.util.Optional.of(employee));
+        when(employeeRepository.save(any())).thenReturn(employee);
+        mailRecieverService.saveToDB("John Doe Development airoline 156 2020/10/12 0775645234","johndoe@abz");
+        Assert.assertTrue(true);
+
+    }
+
+    @Test
+    public void testSaveToDBElseCondition(){
+
+        Employee employee = new Employee();
+        employee.setEmployeeID(156);
+        employee.setFirstName("John");
+        employee.setLastName("Doe");
+        employee.setDepartmentName("Development");
+        employee.setTeamName("airoline");
+        employee.setMobile("0775645234");
+        employee.setJoinDate("2020/10/12");
+        employee.setEmail("johndoe@abz");
+
+        when(employeeRepository.findById(anyLong())).thenReturn(null);
         when(employeeRepository.save(any())).thenReturn(employee);
         mailRecieverService.saveToDB("John Doe Development airoline 156 2020/10/12 0775645234","johndoe@abz");
         Assert.assertTrue(true);
