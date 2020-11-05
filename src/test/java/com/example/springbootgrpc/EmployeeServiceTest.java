@@ -1,8 +1,8 @@
 package com.example.springbootgrpc;
-
 import com.example.springbootgrpc.proto.Employee;
 import com.example.springbootgrpc.proto.Employee.EmpResponse;
-import com.sun.mail.imap.IMAPMessage;
+import com.example.springbootgrpc.repository.EmployeeRepository;
+import com.example.springbootgrpc.service.EmployeeServiceImpl;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.mail.Message;
-
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,7 +34,7 @@ public class EmployeeServiceTest {
                 .setEmail("johndoe@gmail.com")
                 .build();
 
-        com.example.springbootgrpc.Employee employee = new com.example.springbootgrpc.Employee();
+        com.example.springbootgrpc.model.Employee employee = new com.example.springbootgrpc.model.Employee();
         employee.setEmployeeID(156);
         employee.setFirstName("John");
         employee.setLastName("Doe");
@@ -47,6 +44,31 @@ public class EmployeeServiceTest {
         employee.setJoinDate("2020/10/12");
 
         when(employeeRepository.findByEmail("johndoe@gmail.com")).thenReturn(employee);
+        StreamRecorder<EmpResponse> responseObserver = StreamRecorder.create();
+        employeeService.employee(request,responseObserver);
+        Assert.assertTrue(true);
+
+    }
+
+    @Test
+    public void testemployeeEmailError() throws Exception {
+        Employee.EmpRequest request = Employee.EmpRequest.newBuilder()
+                .setEmail("johndoemail.com")
+                .build();
+
+        StreamRecorder<EmpResponse> responseObserver = StreamRecorder.create();
+        employeeService.employee(request,responseObserver);
+        Assert.assertTrue(true);
+
+    }
+
+    @Test
+    public void testemployeeNull() throws Exception {
+        Employee.EmpRequest request = Employee.EmpRequest.newBuilder()
+                .setEmail("john@gmail.com")
+                .build();
+
+        when(employeeRepository.findByEmail("john@gmail.com")).thenReturn(null);
         StreamRecorder<EmpResponse> responseObserver = StreamRecorder.create();
         employeeService.employee(request,responseObserver);
         Assert.assertTrue(true);

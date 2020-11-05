@@ -1,4 +1,6 @@
-package com.example.springbootgrpc;
+package com.example.springbootgrpc.service;
+import com.example.springbootgrpc.model.Employee;
+import com.example.springbootgrpc.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -11,6 +13,7 @@ import javax.mail.Multipart;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class MailRecieverService {
@@ -53,10 +56,9 @@ public class MailRecieverService {
 
     public String getTextFromMimeMessage(MimeMessage message) throws javax.mail.MessagingException, IOException {
         String result = "";
-        if (message.isMimeType("multipart/*")) {
             Multipart multipart = (Multipart) message.getContent();
             result = getTextFromMimeMultipart(multipart);
-        }
+            System.out.println(result);
         return result;
     }
 
@@ -82,17 +84,24 @@ public class MailRecieverService {
         //email format - firstName lastName departmentName teamName employeeID joinData mobile
         String[] splitted = result.split(" ");
 
-        com.example.springbootgrpc.Employee employee = new Employee();
-        employee.setFirstName(splitted[0]);
-        employee.setLastName(splitted[1]);
-        employee.setDepartmentName(splitted[2]);
-        employee.setTeamName(splitted[3]);
-        employee.setEmployeeID(Long.parseLong(splitted[4]));
-        employee.setJoinDate(splitted[5]);
-        employee.setMobile(splitted[6]);
+        Optional<Employee> emp = employeeRepository.findById(Long.valueOf(splitted[4]));
 
-        employee.setEmail(email);
-        employeeRepository.save(employee);
+        if(emp != null) {
+            System.out.println("Employee already exist");
+        }else{
+            Employee employee = new Employee();
+            employee.setFirstName(splitted[0]);
+            employee.setLastName(splitted[1]);
+            employee.setDepartmentName(splitted[2]);
+            employee.setTeamName(splitted[3]);
+            employee.setEmployeeID(Long.parseLong(splitted[4]));
+            employee.setJoinDate(splitted[5]);
+            employee.setMobile(splitted[6]);
+            employee.setEmail(email);
+            employeeRepository.save(employee);
+            System.out.println("Employee record saved successfully");
+        }
+
     }
 
 

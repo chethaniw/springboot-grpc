@@ -1,5 +1,4 @@
-package com.example.springbootgrpc;
-
+package com.example.springbootgrpc.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
@@ -14,7 +13,7 @@ import org.springframework.scheduling.support.PeriodicTrigger;
 import javax.mail.internet.MimeMessage;
 
 @Configuration
-public class ListeningExample {
+public class GrpcConfiguration {
 
     @Bean
     public HeaderMapper<MimeMessage> mailHeaderMapper() {
