@@ -13,7 +13,7 @@ import org.springframework.scheduling.support.PeriodicTrigger;
 import javax.mail.internet.MimeMessage;
 
 @Configuration
-public class GrpcConfiguration {
+public class MailConfiguration {
 
     @Bean
     public HeaderMapper<MimeMessage> mailHeaderMapper() {
