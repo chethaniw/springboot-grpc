@@ -7,6 +7,8 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @GrpcService
 public class EmployeeServiceImpl extends EmployeeServiceGrpc.EmployeeServiceImplBase {
 
@@ -39,5 +41,10 @@ public class EmployeeServiceImpl extends EmployeeServiceGrpc.EmployeeServiceImpl
                 responseObserver.onError(Status.INTERNAL.withDescription("Invalid Email").asException());
 
             }
+    }
+
+    public List<com.example.springbootgrpc.model.Employee> getAllEmployees(){
+        List<com.example.springbootgrpc.model.Employee> employees = employeeRepository.findAll();
+        return employees;
     }
 }
