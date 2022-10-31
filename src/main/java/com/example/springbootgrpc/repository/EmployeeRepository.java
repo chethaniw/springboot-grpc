@@ -1,5 +1,6 @@
-package com.example.springbootgrpc;
+package com.example.springbootgrpc.repository;
 
+import com.example.springbootgrpc.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

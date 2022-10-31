@@ -1,6 +1,7 @@
-package com.example.springbootgrpc;
+package com.example.springbootgrpc.service;
 import com.example.springbootgrpc.proto.Employee;
 import com.example.springbootgrpc.proto.EmployeeServiceGrpc;
+import com.example.springbootgrpc.repository.EmployeeRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -18,7 +19,7 @@ public class EmployeeServiceImpl extends EmployeeServiceGrpc.EmployeeServiceImpl
         String email = request.getEmail();
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
             if(email.matches(regex)){
-                com.example.springbootgrpc.Employee employee = employeeRepository.findByEmail(email);
+                com.example.springbootgrpc.model.Employee employee = employeeRepository.findByEmail(email);
                 if (employee != null){
                     Employee.EmpResponse empResponse = Employee.EmpResponse.newBuilder()
                             .setFirstName(employee.getFirstName())

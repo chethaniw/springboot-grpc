@@ -1,4 +1,6 @@
-package com.example.springbootgrpc;
+package com.example.springbootgrpc.service;
+import com.example.springbootgrpc.model.Employee;
+import com.example.springbootgrpc.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -87,7 +89,7 @@ public class MailRecieverService {
         if(emp != null) {
             System.out.println("Employee already exist");
         }else{
-            com.example.springbootgrpc.Employee employee = new Employee();
+            Employee employee = new Employee();
             employee.setFirstName(splitted[0]);
             employee.setLastName(splitted[1]);
             employee.setDepartmentName(splitted[2]);

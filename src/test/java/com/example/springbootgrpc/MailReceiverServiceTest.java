@@ -1,4 +1,7 @@
 package com.example.springbootgrpc;
+import com.example.springbootgrpc.model.Employee;
+import com.example.springbootgrpc.repository.EmployeeRepository;
+import com.example.springbootgrpc.service.MailRecieverService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

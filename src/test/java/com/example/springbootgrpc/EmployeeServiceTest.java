@@ -1,6 +1,8 @@
 package com.example.springbootgrpc;
 import com.example.springbootgrpc.proto.Employee;
 import com.example.springbootgrpc.proto.Employee.EmpResponse;
+import com.example.springbootgrpc.repository.EmployeeRepository;
+import com.example.springbootgrpc.service.EmployeeServiceImpl;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,7 +34,7 @@ public class EmployeeServiceTest {
                 .setEmail("johndoe@gmail.com")
                 .build();
 
-        com.example.springbootgrpc.Employee employee = new com.example.springbootgrpc.Employee();
+        com.example.springbootgrpc.model.Employee employee = new com.example.springbootgrpc.model.Employee();
         employee.setEmployeeID(156);
         employee.setFirstName("John");
         employee.setLastName("Doe");
