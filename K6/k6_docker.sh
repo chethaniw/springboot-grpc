@@ -1,0 +1,1 @@
+docker run --network host -i loadimpact/k6 run -u 1 -d 5s -< script.js
